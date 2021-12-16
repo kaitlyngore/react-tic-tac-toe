@@ -1,3 +1,4 @@
+import { check } from 'prettier';
 import React, { useState } from 'react';
 import './App.css';
 
@@ -34,26 +35,6 @@ const App = () => {
   // You will need to create a method to change the square
   //   When it is clicked on.
   //   Then pass it into the squares as a callback
-
-  const changeSquares = (id) => {
-    const newSquare = [...squares];
-    console.log(newSquare);
-    for (let row of newSquare) {
-      for (let col of row) {
-        if (col.id === id && col.value === '') {
-          console.log(col.value);
-          col.value = currentPlayer;
-          console.log(col.value);
-        }
-      }
-    }
-    if (currentPlayer === player1) {
-      setCurrentPlayer(player2);
-    } else {
-      setCurrentPlayer(player1);
-    }
-    setSquares(newSquare);
-  };
 
   const checkForWinner = () => {
     let i = 0;
@@ -96,16 +77,44 @@ const App = () => {
     return null;
   };
 
+  const changeSquares = (id) => {
+    const newSquare = [...squares];
+    console.log(newSquare);
+    for (let row of newSquare) {
+      for (let col of row) {
+        if (col.id === id && col.value === '') {
+          console.log(col.value);
+          col.value = currentPlayer;
+          console.log(col.value);
+        }
+      }
+    }
+    if (currentPlayer === player1) {
+      setCurrentPlayer(player2);
+    } else {
+      setCurrentPlayer(player1);
+    }
+    setSquares(newSquare);
+    checkForWinner();
+  };
+
   const resetGame = () => {
-    // Complete in Wave 4
+    const newSquare = [...squares];
+    for (let row of newSquare) {
+      for (let col of row) {
+        col.value = '';
+      }
+    }
+    console.log(squares);
+    setSquares(generateSquares);
   };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>React Tic Tac Toe</h1>
-        <h2>The winner is ... -- Fill in for wave 3 </h2>
-        <button>Reset Game</button>
+        <h2>Winner is {checkForWinner()}</h2>
+        <button onClick={resetGame}>Reset Game</button>
       </header>
       <main>
         <Board squares={squares} onClickCallback={changeSquares} />
