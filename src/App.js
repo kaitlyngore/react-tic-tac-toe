@@ -82,20 +82,23 @@ const App = () => {
     console.log(newSquare);
     for (let row of newSquare) {
       for (let col of row) {
-        if (col.id === id && col.value === '') {
-          console.log(col.value);
-          col.value = currentPlayer;
-          console.log(col.value);
+        if (checkForWinner() === null) {
+          if (col.id === id && col.value === '') {
+            console.log(col.value);
+            col.value = currentPlayer;
+            console.log(col.value);
+          }
+        } else {
+          break;
         }
       }
+      if (currentPlayer === player1) {
+        setCurrentPlayer(player2);
+      } else {
+        setCurrentPlayer(player1);
+      }
+      setSquares(newSquare);
     }
-    if (currentPlayer === player1) {
-      setCurrentPlayer(player2);
-    } else {
-      setCurrentPlayer(player1);
-    }
-    setSquares(newSquare);
-    checkForWinner();
   };
 
   const resetGame = () => {
