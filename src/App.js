@@ -99,13 +99,6 @@ const App = () => {
   };
 
   const resetGame = () => {
-    const newSquare = [...squares];
-    for (let row of newSquare) {
-      for (let col of row) {
-        col.value = '';
-      }
-    }
-    console.log(squares);
     setSquares(generateSquares);
   };
 
